@@ -81,8 +81,12 @@ final_Sentiment=[]
 for i in range(0,len(clean_train_reviews)):
 	pos_freq=0
 	neg_freq=0
+	if((i+1)%1000==0):
+		print("Analyzing review %d for positive bag of words out of %d\n"%(i+1,len(clean_train_reviews)))
 	for w in pos_bag:
 		pos_freq=pos_freq+(clean_train_reviews[i].count(w))
+	if((i+1)%1000==0):
+		print("Analyzing review %d for Negative bag of words out of %d\n"%(i+1,len(clean_train_reviews)))
 	for w in neg_bag:
 		neg_freq=neg_freq+(clean_train_reviews[i].count(w))
 	if(pos_freq>=neg_freq):
@@ -90,7 +94,7 @@ for i in range(0,len(clean_train_reviews)):
 	else:
 		final_Sentiment.append(0)
 	
-
-
-print(train2.sentiment.size)
-print(len(final_Sentiment))
+pred_sentiment=pd.DataFrame(data=final_Sentiment)
+pred_sentiment.to_csv("/home/subir_sbr/Desktop/pred_sentiment.csv",header=None)
+print(pred_sentiment.head(10))
+print(train2['sentiment'][0:10])
